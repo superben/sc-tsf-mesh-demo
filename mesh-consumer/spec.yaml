@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Application
+spec:
+  services:
+    - name: mesh-consumer
+      ports:
+        - targetPort: 18083
+          protocol: http
+      healthCheck:
+        path: /actuator/health
+

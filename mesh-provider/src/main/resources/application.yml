@@ -1,0 +1,13 @@
+
+spring:
+  application:
+    name: provider
+
+server:
+  port: 18081
+
+logging:
+  file:
+    name: ./logs/${spring.application.name}.log
+  level:
+    root: INFO

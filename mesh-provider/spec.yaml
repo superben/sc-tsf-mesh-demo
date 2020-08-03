@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Application
+spec:
+  services:
+    - name: mesh-provider
+      ports:
+        - targetPort: 18081
+          protocol: http
+      healthCheck:
+        path: /actuator/health
+

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer
+  labels:
+    app: consumer
+    service: consumer
+spec:
+  ports:
+    - port: 18083
+      name: http
+  selector:
+    app: consumer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-v1
+  labels:
+    app: consumer
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: consumer
+        version: v1
+    spec:
+      containers:
+        - name: consumer
+          image: registry.local:5000/mesh/consumer:v1.0
+          imagePullPolicy: Always # IfNotPresent
+          ports:
+            - containerPort: 18083

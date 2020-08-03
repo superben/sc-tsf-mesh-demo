@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: provider
+  labels:
+    app: provider
+    service: provider
+spec:
+  ports:
+    - port: 18081
+      name: http
+  selector:
+    app: provider
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider-v1
+  labels:
+    app: provider
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: provider
+        version: v1
+    spec:
+      containers:
+        - name: provider
+          image: registry.local:5000/mesh/provider:v1.0
+          imagePullPolicy: Always # IfNotPresent
+          ports:
+            - containerPort: 18081
